@@ -16,14 +16,17 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 const Container = styled.div`
   flex: 1;
   background-color: #202020;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
   font-size: 14px;
+  position: sticky;
+  top: 0;
 `;
 
 const Wrapper = styled.div`
@@ -47,12 +50,28 @@ const Item = styled.div`
   align-items: center;
   gap: 20px;
   cursor: pointer;
-  padding: 7.5px 0;
+  padding: 5.5px 0;
 `;
 
 const Hr = styled.hr`
-    margin: 15px 0;
+  margin: 15px 0;
   border: 0.5px solid #373737;
+`;
+
+const Login = styled.div``;
+
+const Button = styled.div`
+  padding: 5px 15px;
+  background-color: transparent;
+  border: 1px solid #3ea6ff;
+  color: #3ea6ff;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-top: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 export const Menu = () => (
@@ -83,6 +102,11 @@ export const Menu = () => (
                 <HistoryIcon/>
                 History
             </Item>
+            <Hr/>
+            <Login>
+                Sign in to like videos, comment and subscribe.
+                <Button><AccountCircleIcon/>SIGN IN</Button>
+            </Login>
             <Hr/>
             <Item>
                 <LibraryMusicIcon/>
