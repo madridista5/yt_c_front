@@ -74,6 +74,13 @@ const Button = styled.div`
   gap: 5px;
 `;
 
+const Title = styled.h2`
+  font-size: 12px;
+  font-weight: 500;
+  color: #aaa;
+  margin-bottom: 20px;
+`;
+
 interface Props {
     darkMode: boolean,
     setDarkMode: Dispatch<SetStateAction<boolean>>,
@@ -113,6 +120,7 @@ export const Menu = ({darkMode, setDarkMode}: Props) => (
                 <Button><AccountCircleIcon/>SIGN IN</Button>
             </Login>
             <Hr/>
+            <Title>BEST OF CLONE TUBE</Title>
             <Item>
                 <LibraryMusicIcon/>
                 Music
