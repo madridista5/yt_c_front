@@ -11,7 +11,8 @@ const Container = styled.div`
 const Main = styled.div`
     flex: 7;
 `;
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+`;
 
 export const App = () => {
     return (
