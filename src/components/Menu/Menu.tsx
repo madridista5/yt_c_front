@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import styled from "styled-components";
 import logo from '../../assets/logo.png';
 import HomeIcon from '@mui/icons-material/Home';
@@ -21,9 +21,9 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Container = styled.div`
   flex: 1;
-  background-color: #202020;
+  background-color: ${({theme}) => theme.bg};
   min-height: 100vh;
-  color: white;
+  color: ${({theme}) => theme.text};
   font-size: 14px;
   position: sticky;
   top: 0;
@@ -55,7 +55,7 @@ const Item = styled.div`
 
 const Hr = styled.hr`
   margin: 15px 0;
-  border: 0.5px solid #373737;
+  border: 0.5px solid ${({theme}) => theme.soft};
 `;
 
 const Login = styled.div``;
@@ -74,7 +74,12 @@ const Button = styled.div`
   gap: 5px;
 `;
 
-export const Menu = () => (
+interface Props {
+    darkMode: boolean,
+    setDarkMode: Dispatch<SetStateAction<boolean>>,
+}
+
+export const Menu = ({darkMode, setDarkMode}: Props) => (
     <Container>
         <Wrapper>
             <Logo>
@@ -145,7 +150,7 @@ export const Menu = () => (
                 <HelpOutlineIcon/>
                 Help
             </Item>
-            <Item>
+            <Item onClick={() => setDarkMode(!darkMode)}>
                 <LightModeIcon/>
                 Light Mode
             </Item>

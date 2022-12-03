@@ -1,7 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, {useState} from 'react';
+import styled, {ThemeProvider} from 'styled-components';
 import {Menu} from "./components/Menu/Menu";
 import {Navbar} from "./components/Navbar/Navbar";
+import {darkTheme, lightTheme} from "./utils/theme";
 
 import './App.css';
 
@@ -16,9 +17,12 @@ const Wrapper = styled.div`
 `;
 
 export const App = () => {
+    const [darkMode, setDarkMode] = useState<boolean>(true);
+
     return (
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
             <Container className="app">
-                <Menu/>
+                <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
                 <Main>
                     <Navbar/>
                     <Wrapper>
@@ -26,5 +30,6 @@ export const App = () => {
                     </Wrapper>
                 </Main>
             </Container>
+        </ThemeProvider>
     );
 }
