@@ -17,12 +17,13 @@ import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {Link} from "react-router-dom";
 
 
 const Container = styled.div`
   flex: 1;
   background-color: ${({theme}) => theme.bgLighter};
-  min-height: 100vh;
+  height: 100vh;
   color: ${({theme}) => theme.text};
   font-size: 14px;
   position: sticky;
@@ -89,10 +90,12 @@ interface Props {
 export const Menu = ({darkMode, setDarkMode}: Props) => (
     <Container>
         <Wrapper>
-            <Logo>
-                <Img src={logo}/>
-                CloneTube
-            </Logo>
+            <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
+                <Logo>
+                    <Img src={logo}/>
+                    CloneTube
+                </Logo>
+            </Link>
             <Item>
                 <HomeIcon/>
                 Home
@@ -120,7 +123,7 @@ export const Menu = ({darkMode, setDarkMode}: Props) => (
                 <Button><AccountCircleIcon/>SIGN IN</Button>
             </Login>
             <Hr/>
-            <Title>BEST OF CLONE TUBE</Title>
+            {/*<Title>BEST OF CLONE TUBE</Title>*/}
             <Item>
                 <LibraryMusicIcon/>
                 Music
