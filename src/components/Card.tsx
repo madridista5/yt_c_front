@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const Container = styled.div`
   width: 360px;
@@ -45,15 +46,17 @@ const Info = styled.div`
 `;
 
 export const Card = () => {
-    return <Container>
-        <Image src="https://cdn.pixabay.com/photo/2016/08/27/12/06/website-1624028_960_720.png"/>
-        <Details>
-            <ChannelImage src="https://cdn.pixabay.com/photo/2016/09/14/20/50/tooth-1670434_960_720.png"/>
-            <Texts>
-                <Title>Title video</Title>
-                <ChannelName>Channel name</ChannelName>
-                <Info>660.887 views * 1 day ago</Info>
-            </Texts>
-        </Details>
-    </Container>
+    return <Link to="/video/test" style={{textDecoration: 'none'}}>
+        <Container>
+            <Image src="https://cdn.pixabay.com/photo/2016/08/27/12/06/website-1624028_960_720.png"/>
+            <Details>
+                <ChannelImage src="https://cdn.pixabay.com/photo/2016/09/14/20/50/tooth-1670434_960_720.png"/>
+                <Texts>
+                    <Title>Title video</Title>
+                    <ChannelName>Channel name</ChannelName>
+                    <Info>660.887 views * 1 day ago</Info>
+                </Texts>
+            </Details>
+        </Container>
+    </Link>
 }

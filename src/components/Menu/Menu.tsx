@@ -17,6 +17,7 @@ import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {Link} from "react-router-dom";
 
 
 const Container = styled.div`
@@ -89,10 +90,12 @@ interface Props {
 export const Menu = ({darkMode, setDarkMode}: Props) => (
     <Container>
         <Wrapper>
-            <Logo>
-                <Img src={logo}/>
-                CloneTube
-            </Logo>
+            <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
+                <Logo>
+                    <Img src={logo}/>
+                    CloneTube
+                </Logo>
+            </Link>
             <Item>
                 <HomeIcon/>
                 Home
