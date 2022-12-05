@@ -5,6 +5,9 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {darkTheme, lightTheme} from "./utils/theme";
 
 import './App.css';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Home} from "./pages/Home";
+import {Video} from "./pages/Video";
 
 const Container = styled.div`
   display: flex;
@@ -22,13 +25,22 @@ export const App = () => {
     return (
         <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
             <Container className="app">
+                <BrowserRouter>
                 <Menu darkMode={darkMode} setDarkMode={setDarkMode}/>
                 <Main>
                     <Navbar/>
                     <Wrapper>
-                        Video Cards
+                        <Routes>
+                            <Route path="/">
+                                <Route index element={<Home/>}/>
+                                <Route path="video">
+                                    <Route path=":id" element={<Video/>}/>
+                                </Route>
+                            </Route>
+                        </Routes>
                     </Wrapper>
                 </Main>
+            </BrowserRouter>
             </Container>
         </ThemeProvider>
     );
