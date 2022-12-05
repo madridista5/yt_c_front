@@ -22,7 +22,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const Container = styled.div`
   flex: 1;
   background-color: ${({theme}) => theme.bgLighter};
-  min-height: 100vh;
+  height: 100vh;
   color: ${({theme}) => theme.text};
   font-size: 14px;
   position: sticky;
@@ -120,7 +120,7 @@ export const Menu = ({darkMode, setDarkMode}: Props) => (
                 <Button><AccountCircleIcon/>SIGN IN</Button>
             </Login>
             <Hr/>
-            <Title>BEST OF CLONE TUBE</Title>
+            {/*<Title>BEST OF CLONE TUBE</Title>*/}
             <Item>
                 <LibraryMusicIcon/>
                 Music
