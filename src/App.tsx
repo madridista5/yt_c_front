@@ -3,11 +3,12 @@ import styled, {ThemeProvider} from 'styled-components';
 import {Menu} from "./components/Menu/Menu";
 import {Navbar} from "./components/Navbar/Navbar";
 import {darkTheme, lightTheme} from "./utils/theme";
-
-import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {Home} from "./pages/Home";
 import {Video} from "./pages/Video";
+import { SignIn } from './pages/SignIn';
+
+import './App.css';
 
 const Container = styled.div`
   display: flex;
@@ -34,6 +35,7 @@ export const App = () => {
                         <Routes>
                             <Route path="/">
                                 <Route index element={<Home/>}/>
+                                <Route path="signin" element={<SignIn/>}/>
                                 <Route path="video">
                                     <Route path=":id" element={<Video/>}/>
                                 </Route>
