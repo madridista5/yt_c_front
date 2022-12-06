@@ -123,7 +123,7 @@ export const Menu = ({darkMode, setDarkMode}: Props) => (
             <Hr/>
             <Login>
                 Sign in to like videos, comment and subscribe.
-                <Button><AccountCircleIcon/>SIGN IN</Button>
+                <Link to="signin" style={{textDecoration: 'none'}}><Button><AccountCircleIcon/>SIGN IN</Button></Link>
             </Login>
             <Hr/>
             {/*<Title>BEST OF CLONE TUBE</Title>*/}
