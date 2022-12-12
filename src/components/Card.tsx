@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {VideoTypeResponse} from "../types/video/videoType";
 import {format} from 'timeago.js';
 import axios from "axios";
-import {UserType} from "../types/user/userType";
+import {UserTypeResponse} from "../types/user/userType";
 
 const Container = styled.div<{ type: string | undefined }>`
   width: ${(props => props.type !== 'sm' && '360px')};
@@ -60,7 +60,7 @@ interface Props {
 }
 
 export const Card = ({type, video}: Props) => {
-    const [user, setUser] = useState<UserType>({
+    const [user, setUser] = useState<UserTypeResponse>({
         img: '',
         name: '',
     });
