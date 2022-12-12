@@ -1,6 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import {VideoTypeResponse} from "../types/video/videoType";
+import {format} from 'timeago.js';
+import axios from "axios";
+import {UserTypeResponse} from "../types/user/userType";
 
 const Container = styled.div<{ type: string | undefined }>`
   width: ${(props => props.type !== 'sm' && '360px')};
@@ -52,18 +56,31 @@ const Info = styled.div`
 
 interface Props {
     type?: string,
+    video: VideoTypeResponse,
 }
 
-export const Card = ({type}: Props) => {
+export const Card = ({type, video}: Props) => {
+    const [user, setUser] = useState<UserTypeResponse>({
+        img: '',
+        name: '',
+    });
+
+    useEffect(() => {
+        (async () => {
+            const res = await axios.get(`/users/find/${video.userId}`);
+            setUser(res.data);
+        })();
+    }, [video.userId]);
+
     return <Link to="/video/test" style={{textDecoration: 'none'}}>
         <Container type={type}>
-            <Image type={type} src="https://cdn.pixabay.com/photo/2016/08/27/12/06/website-1624028_960_720.png"/>
+            <Image type={type} src={video.imgUrl}/>
             <Details type={type}>
-                <ChannelImage type={type} src="https://cdn.pixabay.com/photo/2016/09/14/20/50/tooth-1670434_960_720.png"/>
+                <ChannelImage type={type} src={user.img}/>
                 <Texts>
-                    <Title>Title video</Title>
-                    <ChannelName>Channel name</ChannelName>
-                    <Info>660.887 views * 1 day ago</Info>
+                    <Title>{video.title}</Title>
+                    <ChannelName>{user.name}</ChannelName>
+                    <Info>{video.views} views * {format(video.createdAt)}</Info>
                 </Texts>
             </Details>
         </Container>
