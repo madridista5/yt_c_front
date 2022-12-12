@@ -9,8 +9,8 @@ export interface VideoTypeResponse {
     tags: string[],
     likes: string[],
     dislikes: string[],
-    createdAt: string,
-    updatedAt: string,
+    createdAt: Date,
+    updatedAt: Date,
     __v: number,
 }
 

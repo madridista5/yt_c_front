@@ -27,7 +27,7 @@ export const Home = ({type}: Props) => {
     return <Container>
         {
             videos.map((video) => (
-                <Card key={video._id}/>
+                <Card key={video._id} video={video}/>
             ))
         }
     </Container>
