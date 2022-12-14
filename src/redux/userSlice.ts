@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 interface UserState {
-    user: null,
+    currentUser: null,
     loading: boolean,
     error: boolean,
 }
 
 const initialState: UserState = {
-    user: null,
+    currentUser: null,
     loading: false,
     error: false,
 }
@@ -22,7 +22,7 @@ export const userSlice = createSlice({
         },
         loginSuccess: (state, action: PayloadAction<any>) => {
             state.loading = false;
-            state.user = action.payload;
+            state.currentUser = action.payload;
         },
         loginFailure: (state) => {
             state.loading = false;
