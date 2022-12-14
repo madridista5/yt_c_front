@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import {UserTypeResponse} from "../types/user/userType";
 
-interface UserState {
-    currentUser: null,
+export interface UserState {
+    currentUser: UserTypeResponse | null,
     loading: boolean,
     error: boolean,
 }
