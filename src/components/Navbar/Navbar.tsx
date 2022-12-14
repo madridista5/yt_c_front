@@ -5,6 +5,7 @@ import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import SearchIcon from '@mui/icons-material/Search';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import {UserState} from "../../redux/userSlice";
 
 const Container = styled.div`
   position: sticky;
@@ -69,9 +70,12 @@ const Avatar = styled.img`
   background-color: #999;
 `;
 
+interface UserStateSelector {
+    user: UserState,
+}
+
 export const Navbar = () => {
-    // @ts-ignore
-    const {currentUser} = useSelector(state => state.user);
+    const {currentUser} = useSelector((state: UserStateSelector) => state.user);
 
     return (
         <Container>
