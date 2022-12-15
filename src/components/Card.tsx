@@ -61,8 +61,16 @@ interface Props {
 
 export const Card = ({type, video}: Props) => {
     const [user, setUser] = useState<UserTypeResponse>({
-        img: '',
+        createdAt: new Date(),
+        email: '',
         name: '',
+        img: '',
+        password: '',
+        subscribeUsers: [],
+        subscribes: 0,
+        updatedAt: new Date(),
+        __v: 0,
+        _id: '',
     });
 
     useEffect(() => {

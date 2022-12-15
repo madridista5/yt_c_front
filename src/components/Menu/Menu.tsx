@@ -18,6 +18,8 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import MovieCreationIcon from '@mui/icons-material/MovieCreation';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {UserState} from "../../redux/userSlice";
 
 
 const Container = styled.div`
@@ -52,6 +54,7 @@ const Item = styled.div`
   gap: 20px;
   cursor: pointer;
   padding: 5.5px 0;
+
   &:hover {
     background-color: ${({theme}) => theme.soft};
   }
@@ -90,88 +93,101 @@ interface Props {
     setDarkMode: Dispatch<SetStateAction<boolean>>,
 }
 
-export const Menu = ({darkMode, setDarkMode}: Props) => (
-    <Container>
-        <Wrapper>
-            <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
-                <Logo>
-                    <Img src={logo}/>
-                    CloneTube
-                </Logo>
-            </Link>
-            <Item>
-                <HomeIcon/>
-                Home
-            </Item>
-            <Link to="trends" style={{textDecoration: 'none', color: 'inherit'}}>
-            <Item>
-                <ExploreIcon/>
-                Explore
-            </Item>
-            </Link>
-            <Link to="subscriptions" style={{textDecoration: 'none', color: 'inherit'}}>
-            <Item>
-                <SubscriptionsIcon/>
-                Subscriptions
-            </Item>
-            </Link>
-            <Hr/>
-            <Item>
-                <VideoLibraryIcon/>
-                Library
-            </Item>
-            <Item>
-                <HistoryIcon/>
-                History
-            </Item>
-            <Hr/>
-            <Login>
-                Sign in to like videos, comment and subscribe.
-                <Link to="signin" style={{textDecoration: 'none'}}><Button><AccountCircleIcon/>SIGN IN</Button></Link>
-            </Login>
-            <Hr/>
-            {/*<Title>BEST OF CLONE TUBE</Title>*/}
-            <Item>
-                <LibraryMusicIcon/>
-                Music
-            </Item>
-            <Item>
-                <SportsSoccerIcon/>
-                Sports
-            </Item>
-            <Item>
-                <SportsEsportsIcon/>
-                Gaming
-            </Item>
-            <Item>
-                <MovieCreationIcon/>
-                Movies
-            </Item>
-            <Item>
-                <NewspaperIcon/>
-                News
-            </Item>
-            <Item>
-                <LiveTvIcon/>
-                Live
-            </Item>
-            <Hr/>
-            <Item>
-                <SettingsIcon/>
-                Settings
-            </Item>
-            <Item>
-                <FlagIcon/>
-                Report
-            </Item>
-            <Item>
-                <HelpOutlineIcon/>
-                Help
-            </Item>
-            <Item onClick={() => setDarkMode(!darkMode)}>
-                <LightModeIcon/>
-                {darkMode ? 'Light Mode' : 'Dark Mode'}
-            </Item>
-        </Wrapper>
-    </Container>
-)
+interface UserStateSelector {
+    user: UserState,
+}
+
+export const Menu = ({darkMode, setDarkMode}: Props) => {
+    const {currentUser} = useSelector((state: UserStateSelector) => state.user);
+
+    return (
+        <Container>
+            <Wrapper>
+                <Link to="/" style={{textDecoration: 'none', color: 'inherit'}}>
+                    <Logo>
+                        <Img src={logo}/>
+                        CloneTube
+                    </Logo>
+                </Link>
+                <Item>
+                    <HomeIcon/>
+                    Home
+                </Item>
+                <Link to="trends" style={{textDecoration: 'none', color: 'inherit'}}>
+                    <Item>
+                        <ExploreIcon/>
+                        Explore
+                    </Item>
+                </Link>
+                <Link to="subscriptions" style={{textDecoration: 'none', color: 'inherit'}}>
+                    <Item>
+                        <SubscriptionsIcon/>
+                        Subscriptions
+                    </Item>
+                </Link>
+                <Hr/>
+                <Item>
+                    <VideoLibraryIcon/>
+                    Library
+                </Item>
+                <Item>
+                    <HistoryIcon/>
+                    History
+                </Item>
+                <Hr/>
+                {!currentUser &&
+                    <>
+                        <Login>
+                            Sign in to like videos, comment and subscribe.
+                            <Link to="signin" style={{textDecoration: 'none'}}><Button><AccountCircleIcon/>SIGN
+                                IN</Button></Link>
+                        </Login>
+                        <Hr/>
+                    </>
+                }
+                {/*<Title>BEST OF CLONE TUBE</Title>*/}
+                <Item>
+                    <LibraryMusicIcon/>
+                    Music
+                </Item>
+                <Item>
+                    <SportsSoccerIcon/>
+                    Sports
+                </Item>
+                <Item>
+                    <SportsEsportsIcon/>
+                    Gaming
+                </Item>
+                <Item>
+                    <MovieCreationIcon/>
+                    Movies
+                </Item>
+                <Item>
+                    <NewspaperIcon/>
+                    News
+                </Item>
+                <Item>
+                    <LiveTvIcon/>
+                    Live
+                </Item>
+                <Hr/>
+                <Item>
+                    <SettingsIcon/>
+                    Settings
+                </Item>
+                <Item>
+                    <FlagIcon/>
+                    Report
+                </Item>
+                <Item>
+                    <HelpOutlineIcon/>
+                    Help
+                </Item>
+                <Item onClick={() => setDarkMode(!darkMode)}>
+                    <LightModeIcon/>
+                    {darkMode ? 'Light Mode' : 'Dark Mode'}
+                </Item>
+            </Wrapper>
+        </Container>
+    )
+}

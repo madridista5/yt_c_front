@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import SearchIcon from '@mui/icons-material/Search';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {UserState} from "../../redux/userSlice";
 
 const Container = styled.div`
   position: sticky;
@@ -52,16 +55,48 @@ const Button = styled.div`
   gap: 5px;
 `;
 
-export const Navbar = () => (
-    <Container>
-        <Wrapper>
-            <Search>
-                <Input placeholder="Search"/>
-                <SearchIcon/>
-            </Search>
-            <Link to="signin" style={{textDecoration: 'none'}}><Button>
-                <AccountCircleIcon/>SIGN IN
-            </Button></Link>
-        </Wrapper>
-    </Container>
-)
+const User = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: ${({theme}) => theme.text};
+`;
+
+const Avatar = styled.img`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #999;
+`;
+
+interface UserStateSelector {
+    user: UserState,
+}
+
+export const Navbar = () => {
+    const {currentUser} = useSelector((state: UserStateSelector) => state.user);
+
+    return (
+        <Container>
+            <Wrapper>
+                <Search>
+                    <Input placeholder="Search"/>
+                    <SearchIcon/>
+                </Search>
+                {currentUser
+                    ? (
+                        <User>
+                            <VideoCallOutlinedIcon/>
+                            <Avatar src={currentUser.img }/>
+                            {currentUser.name}
+                        </User>
+                    )
+                    : <Link to="signin" style={{textDecoration: 'none'}}><Button>
+                        <AccountCircleIcon/>SIGN IN
+                    </Button></Link>
+                }
+            </Wrapper>
+        </Container>
+    )
+}
