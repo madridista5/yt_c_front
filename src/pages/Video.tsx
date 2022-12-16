@@ -1,11 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOffOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import {Comments} from "../components/Comments";
-import { Card } from "../components/Card";
+import {useDispatch, useSelector} from "react-redux";
+import {UserState} from "../redux/userSlice";
+import {useLocation} from "react-router-dom";
+import axios from "axios";
+import {fetchSuccess, VideoState} from "../redux/videoSlice";
+import {format} from "timeago.js";
+import {UserTypeResponse} from "../types/user/userType";
 
 const Container = styled.div`
   display: flex;
@@ -108,7 +114,34 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
+interface UserStateSelector {
+    user: UserState,
+}
+
+interface VideoStateSelector {
+    video: VideoState,
+}
+
 export const Video = () => {
+    const [channel, setChannel] = useState<UserTypeResponse>();
+    const {currentUser} = useSelector((state: UserStateSelector) => state.user);
+    const {currentVideo} = useSelector((state: VideoStateSelector) => state.video);
+    const dispatch = useDispatch();
+    const path = useLocation().pathname.split('/')[2];
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const videoRes = await axios.get(`/videos/find/${path}`);
+                const channelRes = await axios.get(`/users/find/${videoRes.data.userId}`);
+                setChannel(channelRes.data);
+                dispatch(fetchSuccess(videoRes.data));
+            } catch (err) {
+
+            }
+        })();
+    }, [path, dispatch]);
+
     return <Container>
         <Content>
             <VideoWrapper>
@@ -122,12 +155,12 @@ export const Video = () => {
                     allowFullScreen
                 />
             </VideoWrapper>
-            <Title>Test video</Title>
+            <Title>{currentVideo?.title}</Title>
             <Details>
-                <Info>7.948.244 views * Jun 22, 2022</Info>
+                {currentVideo && <Info>{currentVideo?.views} views * {format(currentVideo.createdAt)}</Info>}
                 <Buttons>
                     <Button>
-                        <ThumbUpOutlinedIcon/> 123
+                        <ThumbUpOutlinedIcon/> {currentVideo?.likes?.length}
                     </Button>
                     <Button>
                         <ThumbDownOffOutlinedIcon/> Dislike
@@ -143,12 +176,11 @@ export const Video = () => {
             <Hr/>
             <Channel>
                 <ChannelInfo>
-                    <Image src="https://cdn.pixabay.com/photo/2016/09/14/20/50/tooth-1670434_960_720.png"/>
+                    <Image src={channel?.img}/>
                     <ChannelDetail>
-                        <ChannelName>Name Channel</ChannelName>
-                        <ChannelCounter>200k subscribers</ChannelCounter>
-                        <Description>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos,
-                            officia!</Description>
+                        <ChannelName>{channel?.name}</ChannelName>
+                        <ChannelCounter>{channel?.subscribes}</ChannelCounter>
+                        <Description>{currentVideo?.desc}</Description>
                     </ChannelDetail>
                 </ChannelInfo>
                 <Subscribe>SUBSCRIBE</Subscribe>
