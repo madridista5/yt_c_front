@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbUpIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbDownIcon from '@mui/icons-material/ThumbDownOutlined';
 import ThumbDownOffOutlinedIcon from '@mui/icons-material/ThumbDownOffAltOutlined';
 import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
@@ -142,6 +144,10 @@ export const Video = () => {
         })();
     }, [path, dispatch]);
 
+    const handleLike = async () => {
+        await axios.put(`/users/like/${currentVideo?._id}`);
+    }
+
     return <Container>
         <Content>
             <VideoWrapper>
@@ -159,11 +165,15 @@ export const Video = () => {
             <Details>
                 {currentVideo && <Info>{currentVideo?.views} views * {format(currentVideo.createdAt)}</Info>}
                 <Buttons>
-                    <Button>
-                        <ThumbUpOutlinedIcon/> {currentVideo?.likes?.length}
+                    <Button onClick={handleLike}>
+                        {!!currentUser?._id && currentVideo?.likes.includes(currentUser._id)
+                            ? <ThumbUpIcon/>
+                            : <ThumbUpOutlinedIcon/>} {currentVideo?.likes?.length}
                     </Button>
                     <Button>
-                        <ThumbDownOffOutlinedIcon/> Dislike
+                        {!!currentUser?._id && currentVideo?.dislikes.includes(currentUser._id)
+                            ? <ThumbDownIcon/>
+                            : <ThumbDownOffOutlinedIcon/>}Dislike
                     </Button>
                     <Button>
                         <ReplyOutlinedIcon/> Share
