@@ -148,6 +148,10 @@ export const Video = () => {
         await axios.put(`/users/like/${currentVideo?._id}`);
     }
 
+    const handleDislike = async () => {
+        await axios.put(`/users/dislike/${currentVideo?._id}`);
+    }
+
     return <Container>
         <Content>
             <VideoWrapper>
@@ -170,7 +174,7 @@ export const Video = () => {
                             ? <ThumbUpIcon/>
                             : <ThumbUpOutlinedIcon/>} {currentVideo?.likes?.length}
                     </Button>
-                    <Button>
+                    <Button onClick={handleDislike}>
                         {!!currentUser?._id && currentVideo?.dislikes.includes(currentUser._id)
                             ? <ThumbDownIcon/>
                             : <ThumbDownOffOutlinedIcon/>}Dislike
