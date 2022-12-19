@@ -8,7 +8,7 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined';
 import AddTaskOutlinedIcon from '@mui/icons-material/AddTaskOutlined';
 import {Comments} from "../components/Comments";
 import {useDispatch, useSelector} from "react-redux";
-import {UserState} from "../redux/userSlice";
+import {subscription, UserState} from "../redux/userSlice";
 import {useLocation} from "react-router-dom";
 import axios from "axios";
 import {fetchSuccess, like, disLike, VideoState} from "../redux/videoSlice";
@@ -116,6 +116,12 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
+const VideoFrame = styled.video`
+  max-height: 720px;
+  width: 100%;
+  object-fit: cover;
+`;
+
 interface UserStateSelector {
     user: UserState,
 }
@@ -147,25 +153,26 @@ export const Video = () => {
     const handleLike = async () => {
         await axios.put(`/users/like/${currentVideo?._id}`);
         dispatch(like(currentUser?._id));
-    }
+    };
 
     const handleDislike = async () => {
         await axios.put(`/users/dislike/${currentVideo?._id}`);
         dispatch(disLike(currentUser?._id));
-    }
+    };
+
+    const handleSub = async () => {
+        if (currentUser !== null) {
+            currentUser.subscribeUsers.includes(channel?._id ? channel._id : '')
+                ? await axios.put(`/users/unsub/${channel?._id}`)
+                : await axios.put(`/users/sub/${channel?._id}`);
+            dispatch(subscription(channel?._id));
+        }
+    };
 
     return <Container>
         <Content>
             <VideoWrapper>
-                <iframe
-                    width="100%"
-                    height="720"
-                    src="https://youtube.com/embed/k3Vfj-e1Ma4"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                />
+                <VideoFrame src={currentVideo.videoUrl}/>
             </VideoWrapper>
             <Title>{currentVideo?.title}</Title>
             <Details>
@@ -199,7 +206,9 @@ export const Video = () => {
                         <Description>{currentVideo?.desc}</Description>
                     </ChannelDetail>
                 </ChannelInfo>
-                <Subscribe>SUBSCRIBE</Subscribe>
+                <Subscribe onClick={handleSub}>{!!channel?._id && currentUser?.subscribeUsers?.includes(channel?._id)
+                    ? 'Subscribed'
+                    : 'Subscribe'}</Subscribe>
             </Channel>
             <Hr/>
             <Comments/>

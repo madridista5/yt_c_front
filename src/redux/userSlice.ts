@@ -31,10 +31,19 @@ export const userSlice = createSlice({
         },
         logout: (state) => {
             return initialState;
+        },
+        subscription: (state, action: PayloadAction<any>) => {
+            if(state.currentUser !== null) {
+                if(state.currentUser.subscribeUsers.includes(action.payload)) {
+                    state.currentUser.subscribeUsers.splice(state.currentUser.subscribeUsers.findIndex(channelId => channelId === action.payload), 1);
+                } else {
+                    state.currentUser.subscribeUsers.push(action.payload);
+                }
+            }
         }
     },
 });
 
-export const {loginStart, loginSuccess, loginFailure, logout} = userSlice.actions;
+export const {loginStart, loginSuccess, loginFailure, logout, subscription} = userSlice.actions;
 
 export default userSlice.reducer;
