@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import {UserTypeResponse} from "../types/user/userType";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -36,13 +38,30 @@ const Text = styled.span`
   font-size: 14px;
 `;
 
-export const Comment = () => {
+interface Props {
+    comment: {
+        _id: string,
+        desc: string,
+        userId: string,
+    }
+}
+
+export const Comment = ({comment}: Props) => {
+    const [channel, setChannel] = useState<UserTypeResponse>();
+
+    useEffect(() => {
+        (async () => {
+            const res = await axios.get(`/users/find/${comment.userId}`);
+            setChannel(res.data);
+        })();
+    }, [comment.userId]);
+
     return (
         <Container>
-            <Avatar src="https://cdn.pixabay.com/photo/2016/09/14/20/50/tooth-1670434_960_720.png"/>
+            <Avatar src={channel?.img}/>
             <Details>
-                <Name>John Lock <Date>2 days ago</Date></Name>
-                <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, est?</Text>
+                <Name>{channel?.name} <Date>2 days ago</Date></Name>
+                <Text>{comment.desc}</Text>
             </Details>
         </Container>
     )
